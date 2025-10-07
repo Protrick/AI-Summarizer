@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Summarizer</title>
+    <style>
+      /* Popup base */
+      :root {
+        --bg: #0f1724;
+        --card: #0b1220;
+        --muted: #9aa4b2;
+        --accent: #6ee7b7;
+        --accent-2: #60a5fa;
+        --danger: #fb7185;
+        --glass: rgba(255, 255, 255, 0.03);
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial;
+        background: linear-gradient(180deg, var(--bg), #071028);
+        color: #e6eef6;
+      }
+      /* global box-sizing and constrain popup size for browser extension */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        /* prefer a sensible minimum width; let browser clamp with max-width */
+        min-width: 360px;
+        max-width: 95vw;
+        width: auto;
+        padding: 14px;
+      }
+      .options {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 12px;
+        flex-wrap: wrap; /* allow controls to wrap instead of forcing narrow layout */
+      }
+      select#Summary_type {
+        flex: 1 1 auto;
+        min-width: 0; /* allow flex children to shrink correctly when wrapping */
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: gray;
+        color: inherit;
+        appearance: none;
+        outline: none;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.02) inset;
+      }
+      button {
+        background: linear-gradient(180deg, var(--accent), var(--accent-2));
+        color: #042028;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        box-shadow: 0 6px 18px rgba(6, 182, 212, 0.08);
+      }
+      button#copy {
+        background: rgb(30, 208, 30);
+        color: black;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        padding: 8px 10px;
+        font-weight: 500;
+      }
+      button:hover {
+        transform: translateY(-1px);
+      }
+      button:active {
+        transform: translateY(0);
+      }
+      pre#result {
+        margin: 0;
+        padding: 12px;
+        border-radius: 10px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        color: var(--muted);
+        max-height: 360px;
+        overflow: auto;
+        white-space: pre-wrap;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
+          "Courier New", monospace;
+        font-size: 13px;
+        line-height: 1.45;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      /* small helper states */
+      .hidden {
+        display: none !important;
+      }
+      @media (max-width: 420px) {
+        /* when screen is small, lower the minimum so popup can fit */
+        body {
+          min-width: 320px;
+          padding: 10px;
+        }
+        button {
+          padding: 7px 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="options">
+      <select id="Summary_type">
+        <option value="brief">Brief</option>
+        <option value="detailed">Detailed</option>
+      </select>
+
+      <button id="summarize">Summarize</button>
+      <button id="copy">Copy</button>
+    </div>
+
+    <pre id="result">
+        select the option and click on summarize...
+    </pre>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
